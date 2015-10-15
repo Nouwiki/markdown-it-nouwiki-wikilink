@@ -11,11 +11,11 @@ module.exports = function wikilink_plugin(md, scheme) {
     var hrefIndex = tokens[idx].attrIndex('href');
 
     if (hrefIndex >= 0 && tokens[idx].attrs[hrefIndex][1] == "") {
-      tokens[idx].attrs[hrefIndex][1] = tokens[1].content;
+      tokens[idx].attrs[hrefIndex][1] = encodeURI(tokens[idx+1].content);
     }
 
     if (oldLinkOpenOverride) {
-      return oldLinkOpenOverride.apply(self, arguments);
+     return oldLinkOpenOverride.apply(self, arguments);
     }
     else {
       // There was no previous renderer override. Just call the default.
