@@ -1,5 +1,5 @@
 {
-  "name": "markdown-it-wikilink",
+  "name": "nouwiki-markdown-it-wikilink",
   "version": "0.1.0",
   "description": "markdown-it plugin that adds support for wikilinks.",
   "keywords": [
