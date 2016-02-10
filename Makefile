@@ -51,12 +51,12 @@ browserify:
 	mkdir dist
 	# Browserify
 	( printf "/*! ${NPM_PACKAGE} ${NPM_VERSION} ${GITHUB_PROJ} @license MIT */" ; \
-		./node_modules/.bin/browserify ./ -s markdownitWikiLink \
-		) > dist/markdown-it-wikilink.js
+		./node_modules/.bin/browserify ./ -s markdownitNouwikiWikiLink \
+		) > dist/markdown-it-nouwiki-wikilink.js
 	# Minify
-	./node_modules/.bin/uglifyjs dist/markdown-it-wikilink.js -b beautify=false,ascii-only=true -c -m \
+	./node_modules/.bin/uglifyjs dist/markdown-it-nouwiki-wikilink.js -b beautify=false,ascii-only=true -c -m \
 		--preamble "/*! ${NPM_PACKAGE} ${NPM_VERSION} ${GITHUB_PROJ} @license MIT */" \
-		> dist/markdown-it-wikilink.min.js
+		> dist/markdown-it-nouwiki-wikilink.min.js
 
 .PHONY: lint test coverage
 .SILENT: lint test

@@ -48,6 +48,10 @@ describe('markdown-it-wikilink', function () {
     s = '[page a](), [page b]()';
     target = '<p><a href="/wiki/page%20a.html">page a</a>, <a href="/wiki/page%20b.html">page b</a></p>\n';
     expect(md.render(s)).to.equal(target);
+
+    s = '[page c](), [page d]()';
+    target = '<p><a href="/wiki/page%20c.html">page c</a>, <a href="/wiki/page%20d.html">page d</a></p>\n';
+    expect(md.render(s)).to.equal(target);
   });
 
 });
