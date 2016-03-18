@@ -19,11 +19,13 @@ module.exports = function wikilink_plugin(md, scheme) {
 
     if (hrefIndex >= 0 && href == "") { // if markdown link doesn't contain a url use the text as url (wikilink)
       tokens[idx].attrs[hrefIndex][1] = head+encodeURI(tokens[idx+1].content)+tail;
-    // else if it does contain data but the link is not a url or an absolute path
+    // else if it does contain data but the link is not a url, an absolute path, or a relative path
     } else if (hrefIndex >= 0) {
       if (href.indexOf("/") != 0) { // not absolute
-        if (href.indexOf("/") == -1 || !(href.indexOf("/") == href.indexOf("//"))) { // not a url
-          tokens[idx].attrs[hrefIndex][1] = head+href+tail;
+        if (href.indexOf("./") != 0 && href.indexOf("../") != 0) { // not relative
+          if (href.indexOf("/") == -1 || !(href.indexOf("/") == href.indexOf("//"))) { // not a url
+            tokens[idx].attrs[hrefIndex][1] = head+href+tail;
+          }
         }
       }
     }
@@ -35,5 +37,5 @@ module.exports = function wikilink_plugin(md, scheme) {
       // There was no previous renderer override. Just call the default.
       return self.renderToken.apply(self, arguments);
     }
-  };
-};
+  }
+}
