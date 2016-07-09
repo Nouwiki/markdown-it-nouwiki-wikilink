@@ -53,4 +53,27 @@ describe('markdown-it-wikilink', function () {
     expect(md.render(s)).to.equal(target);
   });
 
+  it('test 1', function() {
+    var md = require('markdown-it')().use(require('../'));
+    var s, target;
+
+    s = '[Example: StackEdit|StackEdit]()';
+    target = '<p><a href="Example:%20StackEdit">StackEdit</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+
+    s = '[Example: Markdown Here|Markdown Here]()';
+    target = '<p><a href="Example:%20Markdown%20Here">Markdown Here</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+
+    s = '[Example: Rippledoc|Rippledoc]()';
+    target = '<p><a href="Example:%20Rippledoc">Rippledoc</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+
+    s = '[Example: The PHP League|The PHP League]()';
+    target = '<p><a href="Example:%20The%20PHP%20League">The PHP League</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+  });
+
+
+
 });

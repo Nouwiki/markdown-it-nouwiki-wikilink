@@ -1,13 +1,13 @@
 'use strict';
 
-module.exports = function wikilink_plugin(md, options) {
+module.exports = function wikilink_plugin(md, opt) {
   var originalRule = md.renderer.rules.link_open;
 
   var head = "";
   var tail = "";
-  if (options != undefined) {
-    head = options.head;
-    tail = options.tail;
+  if (opt != undefined) {
+    head = opt.head;
+    tail = opt.tail;
   }
 
   md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
