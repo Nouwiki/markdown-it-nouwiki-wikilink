@@ -53,7 +53,7 @@ describe('markdown-it-wikilink', function () {
     expect(md.render(s)).to.equal(target);
   });
 
-  it('test 1', function() {
+  it('test 2', function() {
     var md = require('markdown-it')().use(require('../'));
     var s, target;
 
@@ -74,6 +74,38 @@ describe('markdown-it-wikilink', function () {
     expect(md.render(s)).to.equal(target);
   });
 
+  it('test 3', function() {
+    var md = require('markdown-it')().use(require('../'), {"head": "wiki/", "tail": "", "atHead": "../", "atTail": "/wiki/"});
+    var s, target;
 
+    s = '[Test@Wiki]()';
+    target = '<p><a href="../Wiki/wiki/Test">Test@Wiki</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+
+    s = '[index@Wiki]()';
+    target = '<p><a href="../Wiki/">index@Wiki</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+
+    s = '[@Wiki]()';
+    target = '<p><a href="../Wiki/">@Wiki</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+  });
+
+  it('test 4', function() {
+    var md = require('markdown-it')().use(require('../'), {"head": "", "tail": "", "atHead": "../../", "atTail": "/wiki/"});
+    var s, target;
+
+    s = '[Test@NouText]()';
+    target = '<p><a href="../../NouText/wiki/Test">Test@NouText</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+
+    s = '[index@NouText]()';
+    target = '<p><a href="../../NouText/">index@NouText</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+
+    s = '[@NouText]()';
+    target = '<p><a href="../../NouText/">@NouText</a></p>\n';
+    expect(md.render(s)).to.equal(target);
+  });
 
 });

@@ -5,9 +5,13 @@ module.exports = function wikilink_plugin(md, opt) {
 
   var head = "";
   var tail = "";
-  if (opt != undefined) {
-    head = opt.head;
-    tail = opt.tail;
+  var atHead = "";
+  var atTail = "";
+  if (opt) {
+    head = opt.head || head;
+    tail = opt.tail || tail;
+    atHead = opt.atHead || atHead;
+    atTail = opt.atTail || atTail;
   }
 
   md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
@@ -17,7 +21,30 @@ module.exports = function wikilink_plugin(md, opt) {
     if (hrefIndex >= 0 && href == "") { // if markdown link doesn't contain a url use the text as url (wikilink)
       var str = tokens[idx+1].content.split("|");
       var title = str[0];
-      tokens[idx].attrs[hrefIndex][1] = head+encodeURI(title)+tail;
+
+      // @links
+      var actualHead = head;
+      //var actualTail = tail;
+      var wiki = "";
+      if (title.indexOf("@") > -1) {
+        var split = title.split("@");
+        title = split[0];
+        wiki = split[1];
+        if (title == "index" || title == "") {
+          title = "";
+          atTail = "/";
+        }
+        wiki = atHead+wiki+atTail;
+        actualHead = wiki;
+      } else {
+        if (title == "index" || title == "") {
+          title = "";
+          head = "";
+          actualHead = head;
+        }
+      }
+
+      tokens[idx].attrs[hrefIndex][1] = actualHead+encodeURI(title)+tail;
       if (str.length > 1) {
         str.splice(0, 1);
         tokens[idx+1].content = str.join("|");
